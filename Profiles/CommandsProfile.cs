@@ -1,5 +1,5 @@
 using AutoMapper;
-using ApprovalApp.Dtos;
+using ApprovalApp.Dtos.CommandDtos;
 using ApprovalApp.Models;
 
 namespace ApprovalApp.profiles

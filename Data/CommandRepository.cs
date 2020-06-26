@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApprovalApp.Models;
+using ApprovalApp.Interfaces;
 
 namespace ApprovalApp.Data
 {
-    public class SqlApprovalAppRepo : IApprovalAppRepo
+    public class CommandRepository : ICommandRepository
     {
         private readonly ApprovalAppContext _context;
 
-        public SqlApprovalAppRepo(ApprovalAppContext context)
+        public CommandRepository(ApprovalAppContext context)
         {
             _context = context;
         }
@@ -46,7 +47,7 @@ namespace ApprovalApp.Data
         {
             // throw new System.NotImplementedException();
         }
-    }
 
+    }
 
 }

@@ -1,4 +1,4 @@
-namespace ApprovalApp.Dtos
+namespace ApprovalApp.Dtos.CommandDtos
 {
     public class CommandReadDto
     {

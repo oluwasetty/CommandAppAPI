@@ -11,6 +11,8 @@ namespace ApprovalApp.Data
         }
 
         public DbSet<Command> Commands { get; set; }
+        
+        public DbSet<User> Users { get; set; }
 
     }
 }

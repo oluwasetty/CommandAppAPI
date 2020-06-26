@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ApprovalApp.Dtos
+namespace ApprovalApp.Dtos.CommandDtos
 {
-    public class CommandUpdateDto
+    public class CommandCreateDto
     {
         [Required]
         [MaxLength(250)]

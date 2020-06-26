@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using ApprovalApp.Models;
-using ApprovalApp.Data;
-using ApprovalApp.Dtos;
+using ApprovalApp.Interfaces;
+using ApprovalApp.Dtos.CommandDtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Authorization;
 namespace ApprovalApp.Controllers
 {
     // api/commands
-    [Route("api/commands")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class CommandsController : ControllerBase
     {
-        private readonly IApprovalAppRepo _repository;
+        private readonly ICommandRepository _repository;
         private readonly IMapper _mapper;
 
-        public CommandsController(IApprovalAppRepo repository, IMapper mapper)
+        public CommandsController(ICommandRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

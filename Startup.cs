@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ApprovalApp.Data;
+using ApprovalApp.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,25 +36,26 @@ namespace ApprovalApp
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
-                opt.Audience = Configuration["AAD:ResourceId"];
-                opt.Authority = $"{Configuration["AAD:InstanceId"]}{Configuration["AAD:TenantId"]}";
-                // opt.TokenValidationParameters = new TokenValidationParameters
-                // {
-                //     ValidateIssuer = true,
-                //     ValidateAudience = true,
-                //     ValidateLifetime = true,
-                //     ValidateIssuerSigningKey = true,
-                //     ValidIssuer = Configuration["AAD:ResourceId"],
-                //     ValidAudience = Configuration["AAD:ResourceId"],
-                //     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                // };
+                // opt.Audience = Configuration["AAD:ResourceId"];
+                // opt.Authority = $"{Configuration["AAD:InstanceId"]}{Configuration["AAD:TenantId"]}";
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
             });
 
             services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IApprovalAppRepo, SqlApprovalAppRepo>();
+            services.AddScoped<ICommandRepository, CommandRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +69,8 @@ namespace ApprovalApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
